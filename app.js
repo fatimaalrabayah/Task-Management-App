@@ -39,4 +39,9 @@ function renderTasks() {
   });
 }
 
+function updateIncompleteCounter() {
+  const incompleteTasks = tasks.filter(task => !task.completed);
+  incompleteCounter.textContent = `Incomplete tasks: ${incompleteTasks.length}`;
+}
 renderTasks();
+updateIncompleteCounter();
