@@ -1,4 +1,127 @@
-body{
-    font-family: Arial, sans-serif;
-    margin:40px;
+/* ===== خلفية الصفحة ===== */
+html {
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== البطاقة البيضاء (body نفسه هو البطاقة) ===== */
+body {
+    background: white;
+    max-width: 500px;
+    width: 100%;
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: 0.3s;
+}
+
+body:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== العنوان ===== */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 25px 0;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* ===== قائمة المهام ===== */
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+
+/* ===== كل مهمة (عنصر القائمة) ===== */
+#taskList li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: 0.2s;
+    border-radius: 10px;
+}
+
+#taskList li:hover {
+    background: #f8fafc;
+}
+
+/* ===== مربع الاختيار (المخصص) ===== */
+#taskList input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: 0.2s;
+    background: white;
+    position: relative;
+    margin: 0;
+}
+
+/* عند التحديد */
+#taskList input[type="checkbox"]:checked {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* علامة الصح داخل المربع */
+#taskList input[type="checkbox"]:checked::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ===== نص المهمة (افترض أن الجافاسكريبت سيضيفه داخل <span>) ===== */
+#taskList li span {
+    font-size: 17px;
+    color: #0f172a;
+    flex: 1;
+    transition: 0.2s;
+}
+
+/* عند تحديد المربع، يتوسط النص ويبهت لونه */
+#taskList input[type="checkbox"]:checked ~ span {
+    text-decoration: line-through;
+    color: #94a3b8;
+}
+
+#incompleteCounter {
+    text-align: center;
+    font-size: 16px;
+    color: #d8dde4;
+    background: #06345a;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 500;
+    margin: 0;
+}
+
+#incompleteCounter span {
+    color: #3b82f6;
+    font-weight: 700;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 20px 15px;
+    }
 }

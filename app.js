@@ -1,4 +1,7 @@
 console.log("Task Management App");
+
+const incompleteCounter = document.getElementById("incompleteCounter");
+
 const tasks = [
   {
     id: "task-1",
@@ -43,24 +46,6 @@ function updateIncompleteCounter() {
   const incompleteTasks = tasks.filter(task => !task.completed);
   incompleteCounter.textContent = `Incomplete tasks: ${incompleteTasks.length}`;
 }
+
 renderTasks();
 updateIncompleteCounter();
-
-addTaskBtn.addEventListener("click", () => {
-  const title = taskInput.value.trim();
-  if (title === "") {
-    alert("Enter the task name");
-    return;
-  }
-
-  const newTask = {
-    id: "task-" + Date.now(),
-    title: title,
-    completed: false
-  };
-
-  tasks.push(newTask);
-  taskInput.value = "";
-  renderTasks();
-  updateIncompleteCounter();
-});
