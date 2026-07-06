@@ -45,3 +45,22 @@ function updateIncompleteCounter() {
 }
 renderTasks();
 updateIncompleteCounter();
+
+addTaskBtn.addEventListener("click", () => {
+  const title = taskInput.value.trim();
+  if (title === "") {
+    alert("Enter the task name");
+    return;
+  }
+
+  const newTask = {
+    id: "task-" + Date.now(),
+    title: title,
+    completed: false
+  };
+
+  tasks.push(newTask);
+  taskInput.value = "";
+  renderTasks();
+  updateIncompleteCounter();
+});
