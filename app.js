@@ -21,14 +21,47 @@ function renderTasks() {
   taskList.innerHTML = '';
 
   tasks.forEach(task => {
+
     const li = document.createElement('li');
 
+
+    const checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+
+
+    checkbox.addEventListener('change', function () {
+
+      task.completed = checkbox.checked;
+
+      renderTasks();
+
+    });
+
+
+
     const span = document.createElement('span');
+    span.className = "task-text";
     span.textContent = task.title;
 
+
+
+    if (task.completed) {
+
+      span.style.textDecoration = "line-through";
+      span.style.opacity = "0.5";
+
+    }
+
+
+
+    li.appendChild(checkbox);
     li.appendChild(span);
+
     taskList.appendChild(li);
+
   });
+
 
   updateCounter();
 }
