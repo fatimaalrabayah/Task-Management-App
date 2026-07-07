@@ -171,3 +171,17 @@ h1 {
         font-size: 20px;
     }
 }
+
+#taskList button {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+#taskList button:hover {
+    background: #dc2626;
+}
