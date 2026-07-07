@@ -58,6 +58,38 @@ function renderTasks() {
     li.appendChild(checkbox);
     li.appendChild(span);
 
+const deleteBtn = document.createElement("button");
+
+deleteBtn.textContent = "Delete";
+
+
+deleteBtn.addEventListener("click", function(){
+
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this task?"
+    );
+
+
+    if(confirmDelete){
+
+
+        tasks = tasks.filter(function(t){
+
+            return t.id !== task.id;
+
+        });
+
+
+        renderTasks();
+
+        updateCounter();
+
+    }
+
+
+});
+li.appendChild(deleteBtn);
     taskList.appendChild(li);
 
   });
