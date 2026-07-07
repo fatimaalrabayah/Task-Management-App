@@ -11,6 +11,10 @@ const counterSpan = document.querySelector('#incompleteCounter span');
 function generateId() {
   return nextId++;
 }
+function saveTasks() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  localStorage.setItem('nextId', nextId);
+}
 
 function updateCounter() {
   const incomplete = tasks.filter(task => !task.completed).length;
@@ -33,7 +37,7 @@ function renderTasks() {
     checkbox.addEventListener('change', function () {
 
       task.completed = checkbox.checked;
-
+      saveTasks();
       renderTasks();
 
     });
@@ -58,38 +62,37 @@ function renderTasks() {
     li.appendChild(checkbox);
     li.appendChild(span);
 
-const deleteBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
 
-deleteBtn.textContent = "Delete";
-
-
-deleteBtn.addEventListener("click", function(){
+    deleteBtn.textContent = "Delete";
 
 
-    const confirmDelete = confirm(
+    deleteBtn.addEventListener("click", function () {
+
+
+      const confirmDelete = confirm(
         "Are you sure you want to delete this task?"
-    );
+      );
 
 
-    if(confirmDelete){
+      if (confirmDelete) {
 
 
-        tasks = tasks.filter(function(t){
+        tasks = tasks.filter(function (t) {
 
-            return t.id !== task.id;
+          return t.id !== task.id;
 
         });
 
-
+        saveTasks();
         renderTasks();
-
         updateCounter();
 
-    }
+      }
 
 
-});
-li.appendChild(deleteBtn);
+    });
+    li.appendChild(deleteBtn);
     taskList.appendChild(li);
 
   });
@@ -113,6 +116,7 @@ function addTask() {
   };
 
   tasks.push(newTask);
+  saveTasks();
   renderTasks();
 
   taskInput.value = '';
@@ -128,14 +132,24 @@ taskInput.addEventListener('keypress', function (e) {
 });
 
 function initializeTasks() {
-  const defaultTasks = [
-    { id: generateId(), title: 'Study for the exam', completed: false },
-    { id: generateId(), title: 'Finish the project', completed: false },
-    { id: generateId(), title: 'Read a book', completed: true },
-    { id: generateId(), title: 'Go to the gym', completed: false },
-    { id: generateId(), title: 'Buy groceries', completed: true }
-  ];
-  tasks = defaultTasks;
+  const savedTasks = localStorage.getItem('tasks');
+  const savedNextId = localStorage.getItem('nextId');
+
+  if (savedTasks) {
+    tasks = JSON.parse(savedTasks);
+    nextId = savedNextId ? parseInt(savedNextId) : nextId;
+  } else {
+    const defaultTasks = [
+      { id: generateId(), title: 'Study for the exam', completed: false },
+      { id: generateId(), title: 'Finish the project', completed: false },
+      { id: generateId(), title: 'Read a book', completed: true },
+      { id: generateId(), title: 'Go to the gym', completed: false },
+      { id: generateId(), title: 'Buy groceries', completed: true }
+    ];
+    tasks = defaultTasks;
+    saveTasks();
+  }
+
   renderTasks();
 }
 
