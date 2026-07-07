@@ -1,51 +1,87 @@
 console.log("Task Management App");
 
-const incompleteCounter = document.getElementById("incompleteCounter");
+let tasks = [];
+let nextId = 1;
 
-const tasks = [
-  {
-    id: "task-1",
-    title: "Study for the exam",
-    completed: false
-  },
-  {
-    id: "task-2",
-    title: "Finish the project",
-    completed: false
-  },
-  {
-    id: "task-3",
-    title: "Read a book",
-    completed: true
-  },
-  {
-    id: "task-4",
-    title: "Go to the gym",
-    completed: false
-  },
-  {
-    id: "task-5",
-    title: "Buy groceries",
-    completed: true
-  }
-];
+const taskList = document.getElementById('taskList');
+const taskInput = document.getElementById('taskInput');
+const addBtn = document.getElementById('addBtn');
+const counterSpan = document.querySelector('#incompleteCounter span');
+
+function generateId() {
+  return nextId++;
+}
+
+function updateCounter() {
+  const incomplete = tasks.filter(task => !task.completed).length;
+  counterSpan.textContent = incomplete;
+}
 
 function renderTasks() {
-  const taskList = document.getElementById("taskList");
-
-  taskList.innerHTML = "";
+  taskList.innerHTML = '';
 
   tasks.forEach(task => {
-    const li = document.createElement("li");
-    li.textContent = task.title;
+    const li = document.createElement('li');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
+
+    checkbox.addEventListener('change', function () {
+      task.completed = this.checked;
+      updateCounter();
+    });
+
+    const span = document.createElement('span');
+    span.textContent = task.title;
+
+    li.appendChild(checkbox);
+    li.appendChild(span);
     taskList.appendChild(li);
   });
+
+  updateCounter();
 }
 
-function updateIncompleteCounter() {
-  const incompleteTasks = tasks.filter(task => !task.completed);
-  incompleteCounter.textContent = `Incomplete tasks: ${incompleteTasks.length}`;
+function addTask() {
+  const title = taskInput.value.trim();
+
+  if (title === '') {
+    alert('Please enter a task title.');
+    return;
+  }
+
+  const newTask = {
+    id: generateId(),
+    title: title,
+    completed: false
+  };
+
+  tasks.push(newTask);
+  renderTasks();
+
+  taskInput.value = '';
+  taskInput.focus();
 }
 
-renderTasks();
-updateIncompleteCounter();
+addBtn.addEventListener('click', addTask);
+
+taskInput.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    addTask();
+  }
+});
+
+function initializeTasks() {
+  const defaultTasks = [
+    { id: generateId(), title: 'Study for the exam', completed: false },
+    { id: generateId(), title: 'Finish the project', completed: false },
+    { id: generateId(), title: 'Read a book', completed: true },
+    { id: generateId(), title: 'Go to the gym', completed: false },
+    { id: generateId(), title: 'Buy groceries', completed: true }
+  ];
+  tasks = defaultTasks;
+  renderTasks();
+}
+
+initializeTasks();
