@@ -23,19 +23,9 @@ function renderTasks() {
   tasks.forEach(task => {
     const li = document.createElement('li');
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = task.completed;
-
-    checkbox.addEventListener('change', function () {
-      task.completed = this.checked;
-      updateCounter();
-    });
-
     const span = document.createElement('span');
     span.textContent = task.title;
 
-    li.appendChild(checkbox);
     li.appendChild(span);
     taskList.appendChild(li);
   });
